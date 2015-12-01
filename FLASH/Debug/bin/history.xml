@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=softfp -mthumb -g2 -Map=Blinky.map -O0 --gc-sections -LC:/Users/User/CoIDE/workspace/ARM-BlinkyLED -TC:/Users/User/CoIDE/workspace/ARM-BlinkyLED/stm32f429zi_flash.ld -g">
+      <target file="Blinky.elf" lastModified="1515c6f47ed">
+         <source file="..\obj\main.o" lastModified="1515c6f4465"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="1515c6f4531"/>
+         <source file="..\obj\startup_stm32f429xx.o" lastModified="1515c6f4491"/>
+      </target>
+   </processor>
+</history>
