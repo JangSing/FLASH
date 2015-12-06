@@ -11,13 +11,14 @@
         <Option name="DEBUG" value="2"/>
         <Option name="WARNING" value="1"/>
         <Option name="CompileBeforeDebug" value="0"/>
-        <Option name="FPU" value="1"/>
+        <Option name="FPU" value="2"/>
         <Includepaths>
           <Includepath path="."/>
         </Includepaths>
         <DefinedSymbols>
           <Define name="STM32F429ZI"/>
           <Define name="STM32F429xx"/>
+          <Define name="__FPU_USED"/>
           <Define name="STM32F429_439xx"/>
         </DefinedSymbols>
       </Compile>
@@ -40,7 +41,7 @@
       <Output>
         <Option name="OutputFileType" value="0"/>
         <Option name="Path" value="./"/>
-        <Option name="Name" value="Blinky"/>
+        <Option name="Name" value="FLASH"/>
         <Option name="HEX" value="1"/>
         <Option name="BIN" value="1"/>
       </Output>
@@ -66,7 +67,7 @@
       <Option name="org.coocox.codebugger.gdbjtag.core.autoDownload" value="0"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.verify" value="1"/>
       <Option name="org.coocox.codebugger.gdbjtag.core.downloadFuction" value="Erase Effected"/>
-      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="C:\Users\user26\AppData\Roaming\CooCox\CoIDE\config\flash\CooCox-Flash\CoIDE_STM32F4xx_2048K\STM32F4xx_2048.elf"/>
+      <Option name="org.coocox.codebugger.gdbjtag.core.defaultAlgorithm" value="C:\Users\User\AppData\Roaming\CooCox\CoIDE\config\flash\CooCox-Flash\CoIDE_STM32F4xx_2048K\STM32F4xx_2048.elf"/>
     </DebugOption>
     <ExcludeFile/>
   </Target>
@@ -79,7 +80,9 @@
     <File name="Core/core_cm4.h" path="Core/core_cm4.h" type="1"/>
     <File name="Core/core_cmFunc.h" path="Core/core_cmFunc.h" type="1"/>
     <File name="Config/stm32f429xx.h" path="Config/stm32f429xx.h" type="1"/>
+    <File name="App/FLASH.h" path="app/FLASH.h" type="1"/>
     <File name="Config/startup_stm32f429xx.s" path="Config/startup_stm32f429xx.s" type="1"/>
+    <File name="App/FLASH.c" path="app/FLASH.c" type="1"/>
     <File name="Core/core_cmSimd.h" path="Core/core_cmSimd.h" type="1"/>
     <File name="Config/system_stm32f4xx.h" path="Config/system_stm32f4xx.h" type="1"/>
     <File name="Core" path="" type="2"/>
