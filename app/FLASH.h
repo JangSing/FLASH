@@ -33,17 +33,21 @@ struct FLASH_TypeDef_t
 #define FLASH_CR_SNB2    (1<<5)
 #define FLASH_CR_SNB3    (1<<6)
 #define FLASH_CR_SNB4    (1<<7)
-#define FLASH_CR_PSIZE0  (1<<8)
-#define FLASH_CR_PSIZE1  (1<<9)
+#define FLASH_CR_PSIZE   (3<<8)
 #define FLASH_CR_STRT    (1<<16)
 #define FLASH_CR_EOPIE   (1<<24)
 #define FLASH_CR_ERRIE   (1<<25)
+#define FLASH_CR_LOCK    (1<<31)
 
-
+#define x8      0
+#define x16     1
+#define x32     2
+#define x64     3
 
 void unlockFlashControl();
+void flashLock();
 void sectorErase();
-void flashProgram();
+void flashProgram(uint32_t PSIZEsel);
 int checkBusy();
 int checkError();
 void checkSRnCR();

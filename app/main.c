@@ -3,16 +3,13 @@
 
 int main(void)
 {
-	int i,error;
+	int i=0,error=0;
 	uint32_t checkCR;
 	uint32_t *readAdd;
 	uint32_t guard=0,firstTime=1;
 
 	while(1){
-		if(firstTime){
-			unlockFlashControl();
-			firstTime=0;
-		}
+		unlockFlashControl();
 		error=checkError();
 		readAdd=((uint32_t *)0x08100000);
 		if(guard){
@@ -21,10 +18,12 @@ int main(void)
 		}
 		readAdd=((uint32_t *)0x08100000);
 		if(guard){
-			flashProgram();
+			flashProgram(x32);
 			guard=0;
 		}
+		flashLock();
 		readAdd=((uint32_t *)0x08100000);
+
 	}
 
 

@@ -80,8 +80,8 @@
     <File name="Core/core_cm4.h" path="Core/core_cm4.h" type="1"/>
     <File name="Core/core_cmFunc.h" path="Core/core_cmFunc.h" type="1"/>
     <File name="Config/stm32f429xx.h" path="Config/stm32f429xx.h" type="1"/>
-    <File name="App/FLASH.h" path="app/FLASH.h" type="1"/>
     <File name="Config/startup_stm32f429xx.s" path="Config/startup_stm32f429xx.s" type="1"/>
+    <File name="App/FLASH.h" path="app/FLASH.h" type="1"/>
     <File name="App/FLASH.c" path="app/FLASH.c" type="1"/>
     <File name="Core/core_cmSimd.h" path="Core/core_cmSimd.h" type="1"/>
     <File name="Config/system_stm32f4xx.h" path="Config/system_stm32f4xx.h" type="1"/>

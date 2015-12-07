@@ -5,6 +5,10 @@ void unlockFlashControl(){
   FLASH->KEYR =0xCDEF89AB;
 }
 
+void flashLock(){
+	FLASH->CR |= FLASH_CR_LOCK;
+}
+
 void sectorErase(){
 
 	int busyCount=0;
@@ -32,7 +36,7 @@ void sectorErase(){
 	checkSRnCR();
 }
 
-void flashProgram(){
+void flashProgram(uint32_t PSIZEsel){
 	int busyCount=0,error=0;
 	uint32_t *write,*readAdd;
 
@@ -41,11 +45,10 @@ void flashProgram(){
 	if(!checkBusy()){
 
 		checkSRnCR();
-		FLASH->CR &= ~(FLASH_CR_PSIZE0);
-		FLASH->CR &= ~(FLASH_CR_PSIZE1);
+		FLASH->CR &= ~(FLASH_CR_PSIZE);
 		checkSRnCR();
 		//FLASH->CR |= FLASH_CR_PSIZE0;
-		FLASH->CR |= FLASH_CR_PSIZE1;
+		FLASH->CR |= PSIZEsel<<8;
 		checkSRnCR();
 		FLASH->CR &= ~(FLASH_CR_PG);
 		FLASH->CR |= FLASH_CR_PG;
