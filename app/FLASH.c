@@ -27,7 +27,7 @@ void sectorErase(uint32_t sectorNum){
 		checkSRnCR();
 
 		while(checkBusy()){
-			readAdd=((uint64_t *)(0x08100000));
+			readAdd=((uint64_t *)(TARGET_ADD));
 			busyCount++;
 		}
 	}
@@ -70,7 +70,7 @@ void flashProgram(int PSIZEsel,uint64_t value){
 	WRITE_SIZE *write;
 	uint64_t *readAdd;
 
-	write=((WRITE_SIZE *)(0x08100000));
+	write=((WRITE_SIZE *)(TARGET_ADD));
 
 	if(!checkBusy()){
 
@@ -97,10 +97,10 @@ void flashProgram(int PSIZEsel,uint64_t value){
 		error=checkError();
 
 		while(checkBusy()){
-			readAdd=((uint64_t *)(0x08100000));
+			readAdd=((uint64_t *)(TARGET_ADD));
 			busyCount++;
 		}
-		readAdd=((uint64_t *)(0x08100000));
+		readAdd=((uint64_t *)(TARGET_ADD));
 	}
 
 
@@ -120,7 +120,7 @@ int checkError(){
   writeProtErr = (FLASH->SR>>4)&1;
   OperationErr = (FLASH->SR>>1)&1;
   
-  if(seqErr!=0 || parallelErr!=0 || alignErr!=0 || writeProtErr || OperationErr)
+  if(seqErr!=0 || parallelErr!=0 || alignErr!=0 || writeProtErr!=0 || OperationErr!=0)
     return 1;
   else
     return 0;

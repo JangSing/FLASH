@@ -12,17 +12,17 @@ int main(void)
 	while(1){
 		unlockFlashControl();
 		error=checkError();
-		readAdd=((uint64_t *)0x08100000);
+		readAdd=((uint64_t *)TARGET_ADD);
 		if(guard){
-			sectorErase(SECTOR12);
+			sectorErase(SECTOR1);
 			guard=0;
 		}
-		readAdd=((uint64_t *)0x08100000);
+		readAdd=((uint64_t *)TARGET_ADD);
 		if(guard){
-			bankErase(2);
+			bankErase(1);
 			guard=0;
 		}
-		readAdd=((uint64_t *)0x08100000);
+		readAdd=((uint64_t *)TARGET_ADD);
 		if(guard){
 			flashProgram(x32,0x0101010101010101);
 			guard=0;

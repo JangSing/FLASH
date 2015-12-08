@@ -94,31 +94,35 @@ struct RCC_Type{
 #define x64     3
 
 #define WRITE_SIZE	uint32_t
+#define TARGET_ADD	0x08004000
 
-#define SECTOR0   0
-#define SECTOR1   1
-#define SECTOR2   2
-#define SECTOR3   3
-#define SECTOR4   4
-#define SECTOR5   5
-#define SECTOR6   6
-#define SECTOR7   7
-#define SECTOR8   8
-#define SECTOR9   9
-#define SECTOR10 10
-#define SECTOR11 11
-#define SECTOR12 16
-#define SECTOR13 17
-#define SECTOR14 18
-#define SECTOR15 19
-#define SECTOR16 20
-#define SECTOR17 21
-#define SECTOR18 22
-#define SECTOR19 23
-#define SECTOR20 24
-#define SECTOR21 25
-#define SECTOR22 26
-#define SECTOR23 27
+//Sector in bank 1
+#define SECTOR0     0
+#define SECTOR1     1
+#define SECTOR2     2
+#define SECTOR3     3
+#define SECTOR4     4
+#define SECTOR5     5
+#define SECTOR6     6
+#define SECTOR7     7
+#define SECTOR8     8
+#define SECTOR9     9
+#define SECTOR10    10
+#define SECTOR11    11
+
+//Sector in bank 2
+#define SECTOR12    16
+#define SECTOR13    17
+#define SECTOR14    18
+#define SECTOR15    19
+#define SECTOR16    20
+#define SECTOR17    21
+#define SECTOR18    22
+#define SECTOR19    23
+#define SECTOR20    24
+#define SECTOR21    25
+#define SECTOR22    26
+#define SECTOR23    27
 
 void unlockFlashControl();
 void flashLock();
@@ -132,6 +136,6 @@ uint32_t checkLatency();
 uint32_t getSystemClock();
 
 #define INTERNAL_CLOCK	  16000000
-#define CRYSTAL_CLOCK	   8000000
+#define CRYSTAL_CLOCK	  8000000
 
 #endif
