@@ -3,26 +3,33 @@
 
 int main(void)
 {
-	int i=0,error=0;
-	uint32_t checkCR;
-	uint32_t *readAdd;
-	uint32_t guard=0,firstTime=1;
+	int error=0,guard=0;
+	int latency=checkLatency();
+	uint32_t HCLCK=getSystemClock();
+	uint64_t *readAdd;
+
 
 	while(1){
 		unlockFlashControl();
 		error=checkError();
-		readAdd=((uint32_t *)0x08100000);
+		readAdd=((uint64_t *)0x08100000);
 		if(guard){
-			sectorErase();
+			sectorErase(SECTOR12);
 			guard=0;
 		}
-		readAdd=((uint32_t *)0x08100000);
+		readAdd=((uint64_t *)0x08100000);
 		if(guard){
-			flashProgram(x32);
+			bankErase(2);
 			guard=0;
 		}
+		readAdd=((uint64_t *)0x08100000);
+		if(guard){
+			flashProgram(x32,0x0101010101010101);
+			guard=0;
+		}
+
 		flashLock();
-		readAdd=((uint32_t *)0x08100000);
+		readAdd=((uint64_t *)0x08100000);
 
 	}
 
