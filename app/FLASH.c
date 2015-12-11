@@ -1,8 +1,8 @@
 #include "FLASH.h"
 
-void unlockFlashControl(){
-  FLASH->KEYR =0x45670123;
-  FLASH->KEYR =0xCDEF89AB;
+void unlockFlashCR(){
+	FLASH->KEYR =0x45670123;
+	FLASH->KEYR =0xCDEF89AB;
 }
 
 void flashLock(){
@@ -12,28 +12,24 @@ void flashLock(){
 void sectorErase(uint32_t sectorNum){
 
 	int busyCount=0;
-	uint64_t *readAdd;
   
 	if(!checkBusy()){
-
-		checkSRnCR();
+		checkReg();
 		FLASH->CR &= ~(FLASH_CR_SER);
 		FLASH->CR &= ~(FLASH_CR_SNB);
 		FLASH->CR &= ~(FLASH_CR_STRT);
-		checkSRnCR();
+		checkReg();
 		FLASH->CR |= FLASH_CR_SER;
 		FLASH->CR |= sectorNum << FLASH_CR_SNB_bit;
 		FLASH->CR |= FLASH_CR_STRT;
-		checkSRnCR();
-
+		checkReg();
 		while(checkBusy()){
-			readAdd=((uint64_t *)(TARGET_ADD));
 			busyCount++;
 		}
 	}
 	FLASH->CR &= ~FLASH_CR_SER;
 	FLASH->CR &= ~FLASH_CR_SNB;
-	checkSRnCR();
+	checkReg();
 }
 
 void bankErase(int bankNum){
@@ -42,7 +38,7 @@ void bankErase(int bankNum){
 
 	if(!checkBusy()){
 
-		checkSRnCR();
+		checkReg();
 		if(bankNum==1){
 			FLASH->CR &= ~(FLASH_CR_MER);
 			FLASH->CR |= FLASH_CR_MER;
@@ -51,10 +47,10 @@ void bankErase(int bankNum){
 			FLASH->CR &= ~(FLASH_CR_MER1);
 			FLASH->CR |= FLASH_CR_MER1;
 		}
-		checkSRnCR();
+		checkReg();
 		FLASH->CR &= ~(FLASH_CR_STRT);
 		FLASH->CR |= FLASH_CR_STRT;
-		checkSRnCR();
+		checkReg();
 
 		while(checkBusy()){
 			busyCount++;
@@ -62,31 +58,53 @@ void bankErase(int bankNum){
 	}
 	FLASH->CR &= ~FLASH_CR_MER;
 	FLASH->CR &= ~FLASH_CR_MER1;
-	checkSRnCR();
+	checkReg();
 }
 
-void flashProgram(int PSIZEsel,uint64_t value){
-	int busyCount=0,error=0;
-	WRITE_SIZE *write;
-	uint64_t *readAdd;
+void massErase(){
 
-	write=((WRITE_SIZE *)(TARGET_ADD));
+	int busyCount=0;
 
 	if(!checkBusy()){
 
-		checkSRnCR();
+		checkReg();
+		FLASH->CR &= ~(FLASH_CR_MER);
+		FLASH->CR |= FLASH_CR_MER;
+		FLASH->CR &= ~(FLASH_CR_MER1);
+		FLASH->CR |= FLASH_CR_MER1;
+		checkReg();
+		FLASH->CR &= ~(FLASH_CR_STRT);
+		FLASH->CR |= FLASH_CR_STRT;
+		checkReg();
+
+		while(checkBusy()){
+			busyCount++;
+		}
+	}
+	FLASH->CR &= ~FLASH_CR_MER;
+	FLASH->CR &= ~FLASH_CR_MER1;
+	checkReg();
+}
+
+void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
+	int busyCount=0,error=0;
+	WRITE_SIZE *write;
+
+	write=((uint32_t *)(Address));
+
+	if(!checkBusy()){
+		checkReg();
 		FLASH->CR &= ~(FLASH_CR_PSIZE);
-		checkSRnCR();
+		checkReg();
 		FLASH->CR |= PSIZEsel << FLASH_CR_PSIZE_bit;
-		checkSRnCR();
+		checkReg();
 		FLASH->CR &= ~(FLASH_CR_PG);
 		FLASH->CR |= FLASH_CR_PG;
-		checkSRnCR();
+		checkReg();
 
 		error=checkError();
 
-		checkSRnCR();
-
+		checkReg();
 		switch(PSIZEsel){
 		  case x8 :value &= 0xFF;break;
 		  case x16:value &= 0xFFFF;break;
@@ -97,13 +115,9 @@ void flashProgram(int PSIZEsel,uint64_t value){
 		error=checkError();
 
 		while(checkBusy()){
-			readAdd=((uint64_t *)(TARGET_ADD));
 			busyCount++;
 		}
-		readAdd=((uint64_t *)(TARGET_ADD));
 	}
-
-
 }
 
 int checkBusy(){
@@ -113,7 +127,7 @@ int checkBusy(){
 int checkError(){
   int seqErr,parallelErr,alignErr,writeProtect,writeProtErr,OperationErr;
   
-  checkSRnCR();
+  checkReg();
   seqErr       = (FLASH->SR>>7)&1;
   parallelErr  = (FLASH->SR>>6)&1;
   alignErr     = (FLASH->SR>>5)&1;
@@ -126,41 +140,16 @@ int checkError(){
     return 0;
 }
   
-void checkSRnCR(){
-	uint32_t checkSR,checkCR;
-	checkSR=FLASH->SR;
-	checkCR=FLASH->CR;
+void checkReg(){
+	uint32_t checkSR,checkCR,checkOPTCR;
+	checkSR		=FLASH->SR;
+	checkCR		=FLASH->CR;
+	checkOPTCR	=FLASH->OPTCR;
 }
 
 uint32_t checkLatency(){
 	return FLASH->ACR & 15;
 }
 
-uint32_t getSystemClock(){
-	int divM, xN, divP, divAHB;
-	int sysClock;
-	int enbAHBPrescale = RCC_reg->RCC_CFGR & 256;
 
-	if(enbAHBPrescale == 0)
-		divAHB = 1;
-	else
-		divAHB = 1 << (((RCC_reg->RCC_CFGR >> 4) & 7) + 1);
-
-	xN = (RCC_reg->RCC_PLLCFGR >> 6) & 511;
-	divM = (RCC_reg->RCC_PLLCFGR & 63);
-	divP = 1 << (((RCC_reg->RCC_PLLCFGR >> 16) & 3) + 1);
-
-	if(((RCC_reg->RCC_CFGR & 0xC) >> 2) == 0)
-		sysClock = INTERNAL_CLOCK / divAHB;
-	else if(((RCC_reg->RCC_CFGR & 0xC) >> 2) == 1)
-		sysClock = CRYSTAL_CLOCK / divAHB;
-	else {
-		if(((RCC_reg->RCC_PLLCFGR >> 22) & 1) == 0)
-			sysClock = (INTERNAL_CLOCK * xN) / (divM * divP * divAHB);
-		else
-			sysClock = (CRYSTAL_CLOCK) / (divM * divP * divAHB) * xN;
-	}
-
-	return sysClock;
-}
 

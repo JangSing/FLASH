@@ -1,11 +1,13 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <history>
    <processor signature="arm-none-eabi-gcc -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -g2 -Map=FLASH.map -O0 --gc-sections -LC:/Users/User/CoIDE/workspace/FLASH -TC:/Users/User/CoIDE/workspace/FLASH/stm32f429zi_flash.ld -g">
-      <target file="FLASH.elf" lastModified="1517fca0446">
-         <source file="..\obj\main.o" lastModified="1517fca00aa"/>
-         <source file="..\obj\system_stm32f4xx.o" lastModified="1517fca01da"/>
-         <source file="..\obj\startup_stm32f429xx.o" lastModified="1517fca0145"/>
-         <source file="..\obj\FLASH.o" lastModified="1517fca0121"/>
+      <target file="FLASH.elf" lastModified="15190b9cc6d">
+         <source file="..\obj\main.o" lastModified="15190b9c7ad"/>
+         <source file="..\obj\system_stm32f4xx.o" lastModified="15190b9c93a"/>
+         <source file="..\obj\RCC.o" lastModified="15190b9c816"/>
+         <source file="..\obj\startup_stm32f429xx.o" lastModified="15190b9c8a5"/>
+         <source file="..\obj\FLASH.o" lastModified="15190b9c883"/>
+         <source file="..\obj\DMA.o" lastModified="15190b9c9b5"/>
       </target>
    </processor>
 </history>

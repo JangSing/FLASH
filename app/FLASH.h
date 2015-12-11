@@ -16,48 +16,6 @@ struct FLASH_TypeDef_t
 
 #define FLASH ((FLASH_TypeDef*)(0x40023C00))
 
-typedef struct RCC_Type RCC_t;
-struct RCC_Type{
-	volatile uint32_t RCC_CR;
-	volatile uint32_t RCC_PLLCFGR;
-	volatile uint32_t RCC_CFGR;
-	volatile uint32_t RCC_CIR;
-	volatile uint32_t RCC_AHB1RSTR;
-	volatile uint32_t RCC_AHB2RSTR;
-	volatile uint32_t RCC_AHB3RSTR;
-	volatile uint32_t RESERVE_0;
-	volatile uint32_t RCC_APB1RSTR;
-	volatile uint32_t RCC_APB2RSTR;
-	volatile uint32_t RESERVE_1;
-	volatile uint32_t RESERVE_2;
-	volatile uint32_t RCC_AHB1ENR;
-	volatile uint32_t RCC_AHB2ENR;
-	volatile uint32_t RCC_AHB3ENR;
-	volatile uint32_t RESERVE_3;
-	volatile uint32_t RCC_APB1ENR;
-	volatile uint32_t RCC_APB2ENR;
-	volatile uint32_t RESERVE_4;
-	volatile uint32_t RESERVE_5;
-	volatile uint32_t RCC_AHB1LPENR;
-	volatile uint32_t RCC_AHB2LPENR;
-	volatile uint32_t RCC_AHB3LPENR;
-	volatile uint32_t RESERVE_6;
-	volatile uint32_t RCC_APB1LPENR;
-	volatile uint32_t RCC_APB2LPENR;
-	volatile uint32_t RESERVE_7;
-	volatile uint32_t RESERVE_8;
-	volatile uint32_t RCC_BDCR;
-	volatile uint32_t RCC_CSR;
-	volatile uint32_t RESERVE_9;
-	volatile uint32_t RESERVE_10;
-	volatile uint32_t RCC_SSCGR;
-	volatile uint32_t RCC_PLLI2SCFGR;
-	volatile uint32_t RCC_PLLSAICFGR;
-	volatile uint32_t RCC_DCKCFGR;
-};
-
-#define RCC_reg	((RCC_t*)0x40023800)
-
 #define FLASH_ACR_LATENCY   (15<<0)
 #define FLASH_ACR_PRFTEN    (1<<8)
 #define FLASH_ACR_ICEN      (1<<9)
@@ -87,6 +45,16 @@ struct RCC_Type{
 #define FLASH_CR_EOPIE   (1<<24)
 #define FLASH_CR_ERRIE   (1<<25)
 #define FLASH_CR_LOCK    (1<<31)
+
+#define FLASH_OPTCR_SPRMOD    (1<<31)
+#define FLASH_OPTCR_DB1M      (1<<30)
+#define FLASH_OPTCR_nWRP      (0xFFF<<16)
+#define FLASH_OPTCR_RDP       (0xFF<<8)
+#define FLASH_OPTCR_USER      (7<<5)
+#define FLASH_OPTCR_BFB2      (1<<4)
+#define FLASH_OPTCR_BOR_LEV   (3<<2)
+#define FLASH_OPTCR_OPTSTRT   (1<<1)
+#define FLASH_OPTCR_OPTLOCK   (1<<0)
 
 #define x8      0
 #define x16     1
@@ -124,18 +92,22 @@ struct RCC_Type{
 #define SECTOR22    26
 #define SECTOR23    27
 
-void unlockFlashControl();
+#define BANK1	1
+#define BANK2	2
+
+
+void unlockFlashCR();
 void flashLock();
 void sectorErase(uint32_t sectorNum);
 void bankErase(int bankNum);
-void flashProgram(int PSIZEsel,uint64_t value);
+void massErase();
+void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address);
 int checkBusy();
 int checkError();
-void checkSRnCR();
+void checkReg();
 uint32_t checkLatency();
-uint32_t getSystemClock();
 
-#define INTERNAL_CLOCK	  16000000
-#define CRYSTAL_CLOCK	  8000000
+
+
 
 #endif

@@ -76,19 +76,23 @@
   <Files>
     <File name="App/main.c" path="app/main.c" type="1"/>
     <File name="Config/system_stm32f4xx.c" path="Config/system_stm32f4xx.c" type="1"/>
+    <File name="App/RCC.c" path="app/RCC.c" type="1"/>
     <File name="App" path="" type="2"/>
     <File name="Core/core_cm4.h" path="Core/core_cm4.h" type="1"/>
     <File name="Core/core_cmFunc.h" path="Core/core_cmFunc.h" type="1"/>
     <File name="Config/stm32f429xx.h" path="Config/stm32f429xx.h" type="1"/>
-    <File name="Config/startup_stm32f429xx.s" path="Config/startup_stm32f429xx.s" type="1"/>
     <File name="App/FLASH.h" path="app/FLASH.h" type="1"/>
+    <File name="Config/startup_stm32f429xx.s" path="Config/startup_stm32f429xx.s" type="1"/>
     <File name="App/FLASH.c" path="app/FLASH.c" type="1"/>
     <File name="Core/core_cmSimd.h" path="Core/core_cmSimd.h" type="1"/>
+    <File name="App/DMA.c" path="app/DMA.c" type="1"/>
     <File name="Config/system_stm32f4xx.h" path="Config/system_stm32f4xx.h" type="1"/>
     <File name="Core" path="" type="2"/>
+    <File name="App/RCC.h" path="app/RCC.h" type="1"/>
     <File name="Config/stm32f4xx.h" path="Config/stm32f4xx.h" type="1"/>
     <File name="Config" path="" type="2"/>
     <File name="Core/core_cmInstr.h" path="Core/core_cmInstr.h" type="1"/>
+    <File name="App/DMA.h" path="app/DMA.h" type="1"/>
   </Files>
   <Bookmarks/>
 </Project>
