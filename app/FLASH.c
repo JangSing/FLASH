@@ -86,6 +86,19 @@ void massErase(){
 	checkReg();
 }
 
+void flashProgramEn(){
+	FLASH->CR &= ~(FLASH_CR_PG);
+	FLASH->CR |= FLASH_CR_PG;
+	checkReg();
+}
+
+void flashProgramConfig(int PSIZEsel){
+	FLASH->CR &= ~(FLASH_CR_PG);
+	FLASH->CR &= ~(FLASH_CR_PSIZE);
+	FLASH->CR |= PSIZEsel << FLASH_CR_PSIZE_bit;
+	checkReg();
+}
+
 void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 	int busyCount=0,error=0;
 	WRITE_SIZE *write;
@@ -93,14 +106,8 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 	write=((uint32_t *)(Address));
 
 	if(!checkBusy()){
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_PSIZE);
-		checkReg();
-		FLASH->CR |= PSIZEsel << FLASH_CR_PSIZE_bit;
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_PG);
-		FLASH->CR |= FLASH_CR_PG;
-		checkReg();
+		flashProgramConfig(PSIZEsel);
+		flashProgramEn();
 
 		error=checkError();
 

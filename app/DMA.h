@@ -55,7 +55,25 @@ struct DMA_Type{
 #define DMA_SxCR_PL_bit       16
 #define DMA_SxCR_CHSEL_bit    25
 
-void configDMA2s7CR();
+#define PeriToMem         0
+#define MemToPeri         1
+#define MemToMem          2   
+
+#define LowPrio           0
+#define MediumPrio        1
+#define HighPrio          2
+#define VeryHighPrio      3
+
+#define CHANNEL0          0
+#define CHANNEL1          1
+#define CHANNEL2          2
+#define CHANNEL3          3
+#define CHANNEL4          4
+#define CHANNEL5          5
+#define CHANNEL6          6
+#define CHANNEL7          7
+
+void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL);
 void DMA_memcpy8( uint32_t *pDstAddr, uint32_t *pSrcAddr, unsigned int uSize );
 void enableDMA();
 

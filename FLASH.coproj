@@ -90,8 +90,8 @@
     <File name="Core" path="" type="2"/>
     <File name="App/RCC.h" path="app/RCC.h" type="1"/>
     <File name="Config/stm32f4xx.h" path="Config/stm32f4xx.h" type="1"/>
-    <File name="Config" path="" type="2"/>
     <File name="Core/core_cmInstr.h" path="Core/core_cmInstr.h" type="1"/>
+    <File name="Config" path="" type="2"/>
     <File name="App/DMA.h" path="app/DMA.h" type="1"/>
   </Files>
   <Bookmarks/>

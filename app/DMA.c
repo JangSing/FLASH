@@ -2,7 +2,7 @@
 #include "RCC.h"
 
 
-void configDMA2s7CR() {  // stream 7  channel 0
+void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL) {  // stream 7  channel 0
 
 	DMA2->S7.CR &= ~DMA_SxCR_EN;			//Stream Disable
   
@@ -19,7 +19,7 @@ void configDMA2s7CR() {  // stream 7  channel 0
 	DMA2->S7.CR |= DMA_SxCR_TCIE;
   
 	DMA2->S7.CR &= ~DMA_SxCR_DIR;
-	DMA2->S7.CR |= 2 << DMA_SxCR_DIR_bit;
+	DMA2->S7.CR |= direction << DMA_SxCR_DIR_bit;
 
 	DMA2->S7.CR &= ~DMA_SxCR_PINC;
 	DMA2->S7.CR |= DMA_SxCR_PINC;
@@ -28,16 +28,16 @@ void configDMA2s7CR() {  // stream 7  channel 0
 	DMA2->S7.CR |= DMA_SxCR_MINC;
   
 	DMA2->S7.CR &= ~DMA_SxCR_PSIZE;
-	DMA2->S7.CR |= 2 << DMA_SxCR_PSIZE_bit;
+	DMA2->S7.CR |= PSIZE << DMA_SxCR_PSIZE_bit;
   
 	DMA2->S7.CR &= ~DMA_SxCR_MSIZE;
-	DMA2->S7.CR |= 2 << DMA_SxCR_MSIZE_bit;
+	DMA2->S7.CR |= MSIZE << DMA_SxCR_MSIZE_bit;
   
 	DMA2->S7.CR &= ~DMA_SxCR_PL;
-	DMA2->S7.CR |= 3 << DMA_SxCR_PL_bit;
+	DMA2->S7.CR |= PL << DMA_SxCR_PL_bit;
   
 	DMA2->S7.CR &= ~DMA_SxCR_CHSEL;
-	DMA2->S7.CR |= 0 << DMA_SxCR_CHSEL_bit;
+	DMA2->S7.CR |= CHSEL << DMA_SxCR_CHSEL_bit;
 
 }
 

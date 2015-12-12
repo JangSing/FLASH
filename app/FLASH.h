@@ -101,6 +101,8 @@ void flashLock();
 void sectorErase(uint32_t sectorNum);
 void bankErase(int bankNum);
 void massErase();
+void flashProgramEn();
+void flashProgramConfig(int PSIZEsel);
 void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address);
 int checkBusy();
 int checkError();
