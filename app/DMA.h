@@ -73,8 +73,10 @@ struct DMA_Type{
 #define CHANNEL6          6
 #define CHANNEL7          7
 
+void checkDMAReg();
 void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL);
 void DMA_memcpy8( uint32_t *pDstAddr, uint32_t *pSrcAddr, unsigned int uSize );
 void enableDMA();
+void clearDMAHighIntrrFlag();
 
 #endif	//__DMA_H__

@@ -1,5 +1,35 @@
 #include "FLASH.h"
 
+int checkBusy(){
+	return ((FLASH->SR>>16)&1);
+}
+
+int checkError(){
+  int seqErr,parallelErr,alignErr,writeProtErr,OperationErr;
+
+  checkFlashReg();
+  seqErr       = (FLASH->SR>>7)&1;
+  parallelErr  = (FLASH->SR>>6)&1;
+  alignErr     = (FLASH->SR>>5)&1;
+  writeProtErr = (FLASH->SR>>4)&1;
+  OperationErr = (FLASH->SR>>1)&1;
+
+  if(seqErr!=0 || parallelErr!=0 || alignErr!=0 || writeProtErr!=0 || OperationErr!=0)
+    return 1;
+  else
+    return 0;
+}
+
+void checkFlashReg(){
+	uint32_t checkSR 	= FLASH->SR;
+	uint32_t checkCR 	= FLASH->CR;
+	uint32_t checkOPTCR	= FLASH->OPTCR;
+}
+
+uint32_t checkLatency(){
+	return FLASH->ACR & 15;
+}
+
 void unlockFlashCR(){
 	FLASH->KEYR =0x45670123;
 	FLASH->KEYR =0xCDEF89AB;
@@ -14,22 +44,22 @@ void sectorErase(uint32_t sectorNum){
 	int busyCount=0;
   
 	if(!checkBusy()){
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_SER);
-		FLASH->CR &= ~(FLASH_CR_SNB);
-		FLASH->CR &= ~(FLASH_CR_STRT);
-		checkReg();
+		checkFlashReg();
+		FLASH->CR &= ~FLASH_CR_SER;
+		FLASH->CR &= ~FLASH_CR_SNB;
+		FLASH->CR &= ~FLASH_CR_STRT;
+		checkFlashReg();
 		FLASH->CR |= FLASH_CR_SER;
 		FLASH->CR |= sectorNum << FLASH_CR_SNB_bit;
 		FLASH->CR |= FLASH_CR_STRT;
-		checkReg();
+		checkFlashReg();
 		while(checkBusy()){
 			busyCount++;
 		}
 	}
 	FLASH->CR &= ~FLASH_CR_SER;
 	FLASH->CR &= ~FLASH_CR_SNB;
-	checkReg();
+	checkFlashReg();
 }
 
 void bankErase(int bankNum){
@@ -38,19 +68,19 @@ void bankErase(int bankNum){
 
 	if(!checkBusy()){
 
-		checkReg();
+		checkFlashReg();
 		if(bankNum==1){
-			FLASH->CR &= ~(FLASH_CR_MER);
+			FLASH->CR &= ~FLASH_CR_MER;
 			FLASH->CR |= FLASH_CR_MER;
 		}
 		else{
-			FLASH->CR &= ~(FLASH_CR_MER1);
+			FLASH->CR &= ~FLASH_CR_MER1;
 			FLASH->CR |= FLASH_CR_MER1;
 		}
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_STRT);
+		checkFlashReg();
+		FLASH->CR &= ~FLASH_CR_STRT;
 		FLASH->CR |= FLASH_CR_STRT;
-		checkReg();
+		checkFlashReg();
 
 		while(checkBusy()){
 			busyCount++;
@@ -58,7 +88,7 @@ void bankErase(int bankNum){
 	}
 	FLASH->CR &= ~FLASH_CR_MER;
 	FLASH->CR &= ~FLASH_CR_MER1;
-	checkReg();
+	checkFlashReg();
 }
 
 void massErase(){
@@ -67,15 +97,15 @@ void massErase(){
 
 	if(!checkBusy()){
 
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_MER);
+		checkFlashReg();
+		FLASH->CR &= ~FLASH_CR_MER;
+		FLASH->CR &= ~FLASH_CR_MER1;
 		FLASH->CR |= FLASH_CR_MER;
-		FLASH->CR &= ~(FLASH_CR_MER1);
 		FLASH->CR |= FLASH_CR_MER1;
-		checkReg();
-		FLASH->CR &= ~(FLASH_CR_STRT);
+		checkFlashReg();
+		FLASH->CR &= ~FLASH_CR_STRT;
 		FLASH->CR |= FLASH_CR_STRT;
-		checkReg();
+		checkFlashReg();
 
 		while(checkBusy()){
 			busyCount++;
@@ -83,20 +113,20 @@ void massErase(){
 	}
 	FLASH->CR &= ~FLASH_CR_MER;
 	FLASH->CR &= ~FLASH_CR_MER1;
-	checkReg();
+	checkFlashReg();
 }
 
 void flashProgramEn(){
-	FLASH->CR &= ~(FLASH_CR_PG);
+	FLASH->CR &= ~FLASH_CR_PG;
 	FLASH->CR |= FLASH_CR_PG;
-	checkReg();
+	checkFlashReg();
 }
 
 void flashProgramConfig(int PSIZEsel){
-	FLASH->CR &= ~(FLASH_CR_PG);
-	FLASH->CR &= ~(FLASH_CR_PSIZE);
+	FLASH->CR &= ~FLASH_CR_PG;
+	FLASH->CR &= ~FLASH_CR_PSIZE;
 	FLASH->CR |= PSIZEsel << FLASH_CR_PSIZE_bit;
-	checkReg();
+	checkFlashReg();
 }
 
 void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
@@ -111,7 +141,7 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 
 		error=checkError();
 
-		checkReg();
+		checkFlashReg();
 		switch(PSIZEsel){
 		  case x8 :value &= 0xFF;break;
 		  case x16:value &= 0xFFFF;break;
@@ -125,38 +155,14 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 			busyCount++;
 		}
 	}
+	flashProgramDisable();
 }
 
-int checkBusy(){
-	return ((FLASH->SR>>16)&1);
+void flashProgramDisable(){
+	FLASH->CR &= ~FLASH_CR_PG;
 }
 
-int checkError(){
-  int seqErr,parallelErr,alignErr,writeProtect,writeProtErr,OperationErr;
-  
-  checkReg();
-  seqErr       = (FLASH->SR>>7)&1;
-  parallelErr  = (FLASH->SR>>6)&1;
-  alignErr     = (FLASH->SR>>5)&1;
-  writeProtErr = (FLASH->SR>>4)&1;
-  OperationErr = (FLASH->SR>>1)&1;
-  
-  if(seqErr!=0 || parallelErr!=0 || alignErr!=0 || writeProtErr!=0 || OperationErr!=0)
-    return 1;
-  else
-    return 0;
-}
-  
-void checkReg(){
-	uint32_t checkSR,checkCR,checkOPTCR;
-	checkSR		=FLASH->SR;
-	checkCR		=FLASH->CR;
-	checkOPTCR	=FLASH->OPTCR;
-}
 
-uint32_t checkLatency(){
-	return FLASH->ACR & 15;
-}
 
 
 

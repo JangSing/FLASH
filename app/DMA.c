@@ -1,6 +1,11 @@
 #include "DMA.h"
 #include "RCC.h"
 
+void checkDMAReg(){
+	uint32_t checkHISR= DMA2->HISR;
+	uint32_t chcekS7CR= DMA2->S7.CR;
+}
+
 
 void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL) {  // stream 7  channel 0
 
@@ -39,23 +44,29 @@ void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL) {  // st
 	DMA2->S7.CR &= ~DMA_SxCR_CHSEL;
 	DMA2->S7.CR |= CHSEL << DMA_SxCR_CHSEL_bit;
 
+	checkDMAReg();
 }
 
 void DMA_memcpy8( uint32_t *pDstAddr, uint32_t *pSrcAddr, unsigned int uSize ){
-    														/* As per page 233 this is how to configure a stream */
 	uint32_t checkS7CR;
 	while( ( DMA2->S7.CR & 1 ) == 1 ){
-         DMA2->S7.CR &= ~1;  					// 1. If stream is enabled, disable it
+         DMA2->S7.CR &= ~1;  					        // If stream is enabled, disable it
     }
 	DMA2->S7.PAR =  (uint32_t)pSrcAddr;					/* source address */
-	DMA2->S7.M0AR = (uint32_t)pDstAddr; 					/* destination address */
-    DMA2->S7.NDTR = uSize;     							// Number of data items to transfer
+	DMA2->S7.M0AR = (uint32_t)pDstAddr; 				/* destination address */
+    DMA2->S7.NDTR = uSize;     							  // Number of data items to transfer
     checkS7CR = DMA2->S7.CR;
 }
 
 void enableDMA(){
-	uint32_t checkS7CR;
 	DMA2->S7.CR &= ~1;
-	DMA2->S7.CR |= 1;     						// Stream Enable
-	checkS7CR = DMA2->S7.CR;
+	DMA2->S7.CR |= 1;
+	checkDMAReg();
 }
+
+void clearDMAHighIntrrFlag(){
+	DMA2->HIFCR = (uint32_t)0x0f400000;
+	checkDMAReg();
+}
+
+

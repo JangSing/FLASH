@@ -95,19 +95,22 @@ struct FLASH_TypeDef_t
 #define BANK1	1
 #define BANK2	2
 
+int checkBusy();
+int checkError();
+void checkFlashReg();
+uint32_t checkLatency();
 
 void unlockFlashCR();
 void flashLock();
+
 void sectorErase(uint32_t sectorNum);
 void bankErase(int bankNum);
 void massErase();
+
 void flashProgramEn();
 void flashProgramConfig(int PSIZEsel);
 void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address);
-int checkBusy();
-int checkError();
-void checkReg();
-uint32_t checkLatency();
+void flashProgramDisable();
 
 
 
