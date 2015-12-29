@@ -14,7 +14,8 @@ struct FLASH_TypeDef_t
   volatile uint32_t OPTCR1;
 };
 
-#define FLASH ((FLASH_TypeDef*)(0x40023C00))
+#define FLASH_BASE_ADDRESS	0x40023C00
+#define FLASH 				((FLASH_TypeDef*)FLASH_BASE_ADDRESS)
 
 #define FLASH_ACR_LATENCY   (15<<0)
 #define FLASH_ACR_PRFTEN    (1<<8)
@@ -62,7 +63,7 @@ struct FLASH_TypeDef_t
 #define x64     3
 
 #define WRITE_SIZE	uint32_t
-#define TARGET_ADD	0x08004000
+#define TARGET_ADD	((uint32_t *)0x08104000)
 
 //Sector in bank 1
 #define SECTOR0     0
@@ -96,7 +97,7 @@ struct FLASH_TypeDef_t
 #define BANK2	2
 
 int checkBusy();
-int checkError();
+int checkFlashError();
 void checkFlashReg();
 uint32_t checkLatency();
 
@@ -112,7 +113,8 @@ void flashProgramConfig(int PSIZEsel);
 void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address);
 void flashProgramDisable();
 
-
+void unlockFlashOptionByte();
+void flashOptionByteLock();
 
 
 #endif

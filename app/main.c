@@ -3,16 +3,17 @@
 #include "DMA.h"
 #include <stdint.h>
 
-#define TRANSFER_LEN	3
+#define TRANSFER_LEN	14
 
 int main(void)
 {
-	int error=0,guard=0,i=0;
+	int flashError=0,guard=0,i=0;
 	int latency=checkLatency();
 	uint32_t HCLCK=getSystemClock();
-	uint64_t *readAdd;
+	WRITE_SIZE *readAdd=TARGET_ADD;
 	uint32_t *readAdd1=((uint32_t *)0x08104000);
-	uint32_t SRC_Const_Buffer[3]={0x10100010,0x10111010,0x11110000};
+	uint32_t SRC_Const_Buffer[]={12,23,15,10,12,22,22,12,32,12,14,53,90,99};
+	uint32_t test_Buffer[10];
 
 	checkDMAReg();
 	checkFlashReg();
@@ -21,56 +22,62 @@ int main(void)
 
 	while(1){
 		unlockFlashCR();
-		error=checkError();
-		for(i=0;i<10;i++)
+		unlockFlashOptionByte();
+		flashError=checkFlashError();
+		for(i=0;i<TRANSFER_LEN;i++)
 			readAdd1++;
 		checkDMAReg();
 		checkFlashReg();
 		//Sector Erase
 		if(guard){
 			sectorErase(SECTOR13);
-			error=checkError();
+			flashError=checkFlashError();
 			guard=0;
 		}
 		checkDMAReg();
 		checkFlashReg();
-		readAdd=((uint64_t *)TARGET_ADD);
+		readAdd=TARGET_ADD;
 		//Bank Erase
 		if(guard){
 			bankErase(BANK2);
-			error=checkError();
+			flashError=checkFlashError();
 			guard=0;
 		}
 		checkDMAReg();
 		checkFlashReg();
-		readAdd=((uint64_t *)TARGET_ADD);
+		readAdd=TARGET_ADD;
 		//Flash Program
 		if(guard){
-			flashProgram(x32,0x0101010101010101,0x08004000);
-			error=checkError();
+			flashProgram(x32,0x11111,TARGET_ADD);
+			flashError=checkFlashError();
 			guard=0;
 		}
 		checkDMAReg();
 		checkFlashReg();
-		readAdd=((uint64_t *)TARGET_ADD);
+		readAdd=TARGET_ADD;
 		//Program by DMA transfer
 		if(guard){
 			configDMA2s7CR(MemToMem,x32,x32,VeryHighPrio,CHANNEL0);
-			DMA_memcpy8( ((uint32_t *)0x08104000), &SRC_Const_Buffer, TRANSFER_LEN );
+			DMA_memcpy8( ((uint32_t *)0x08104000), SRC_Const_Buffer, TRANSFER_LEN );
+			//DMA_memcpy8( test_Buffer, SRC_Const_Buffer, TRANSFER_LEN );
 			flashProgramConfig(x32);
 			flashProgramEn();
 			enableDMA();
+			flashError=checkFlashError();
+
 			flashProgramDisable();
 			clearDMAHighIntrrFlag();
-			error=checkError();
+
+
 			guard=0;
 		}
 		checkDMAReg();
 		checkFlashReg();
-		readAdd=((uint64_t *)TARGET_ADD);
+		readAdd=TARGET_ADD;
 
 		flashLock();
-		readAdd=((uint64_t *)0x08100000);
+		flashOptionByteLock();
+		readAdd=TARGET_ADD;
 
 		checkDMAReg();
 		checkFlashReg();

@@ -47,7 +47,7 @@ void configDMA2s7CR(int direction,int PSIZE,int MSIZE,int PL,int CHSEL) {  // st
 	checkDMAReg();
 }
 
-void DMA_memcpy8( uint32_t *pDstAddr, uint32_t *pSrcAddr, unsigned int uSize ){
+void DMA_memcpy8( uint32_t *pDstAddr, uint32_t *pSrcAddr, int uSize ){
 	uint32_t checkS7CR;
 	while( ( DMA2->S7.CR & 1 ) == 1 ){
          DMA2->S7.CR &= ~1;  					        // If stream is enabled, disable it

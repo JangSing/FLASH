@@ -4,7 +4,7 @@ int checkBusy(){
 	return ((FLASH->SR>>16)&1);
 }
 
-int checkError(){
+int checkFlashError(){
   int seqErr,parallelErr,alignErr,writeProtErr,OperationErr;
 
   checkFlashReg();
@@ -139,7 +139,7 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 		flashProgramConfig(PSIZEsel);
 		flashProgramEn();
 
-		error=checkError();
+		error=checkFlashError();
 
 		checkFlashReg();
 		switch(PSIZEsel){
@@ -149,7 +149,7 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
 		  case x64:value &= 0xFFFFFFFFFFFFFFFF;break;
 		}
 		*write=value;
-		error=checkError();
+		error=checkFlashError();
 
 		while(checkBusy()){
 			busyCount++;
@@ -162,6 +162,15 @@ void flashProgramDisable(){
 	FLASH->CR &= ~FLASH_CR_PG;
 }
 
+void unlockFlashOptionByte(){
+	FLASH->OPTKEYR =0x08192A3B;
+	FLASH->OPTKEYR =0x4C5D6E7F;
+}
+
+void flashOptionByteLock(){
+	FLASH->OPTCR|= FLASH_OPTCR_OPTLOCK;
+
+}
 
 
 
