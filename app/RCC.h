@@ -44,18 +44,10 @@ struct RCC_t{
 #define RCC_AHB1RSTR_DMA2RST	(1 << 22)
 #define RCC_AHB1ENR_DMA2EN		(1 << 22)
 
-#define RCC_APB2RSTR_USART1RST	(1 << 4)
-#define RCC_APB2ENR_USART1EN	(1 << 4)
-
-#define RCC_AHB1RSTR_GPIOARST	(1 << 0)
-#define RCC_AHB1ENR_GPIOAEN		(1 << 0)
-
 #define INTERNAL_CLOCK	  16000000
 #define CRYSTAL_CLOCK	  8000000
 
 void DMA2UnresetEnableClock();
 uint32_t getSystemClock();
-void GPIOUnresetEnableClock();
-void UARTUnresetEnableClock();
 
 #endif	//__RCC_H__

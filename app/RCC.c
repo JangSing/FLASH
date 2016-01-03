@@ -9,26 +9,6 @@ void DMA2UnresetEnableClock(){
 	uint32_t checkRCC_AHB1RSTR = RCC->RCC_AHB1RSTR;
 }
 
-void UARTUnresetEnableClock(){
-	uint32_t readRST,readEN;
-
-	RCC->RCC_APB2RSTR &= ~ RCC_APB2RSTR_USART1RST;
-	RCC->RCC_APB2ENR  |= RCC_APB2ENR_USART1EN;
-
-	readRST=RCC->RCC_APB2RSTR;
-	readEN=RCC->RCC_APB2ENR;
-}
-
-void GPIOUnresetEnableClock(){
-	uint32_t readRST,readEN;
-
-	RCC->RCC_AHB1RSTR	&= ~ RCC_AHB1RSTR_GPIOARST;
-	RCC->RCC_AHB1ENR	|= RCC_AHB1ENR_GPIOAEN;
-
-	readRST=RCC->RCC_AHB1RSTR;
-	readEN=RCC->RCC_AHB1ENR;
-}
-
 uint32_t getSystemClock(){
 	int divM, xN, divP, divAHB;
 	int sysClock;
@@ -53,6 +33,5 @@ uint32_t getSystemClock(){
 		else
 			sysClock = (CRYSTAL_CLOCK) / (divM * divP * divAHB) * xN;
 	}
-
 	return sysClock;
 }

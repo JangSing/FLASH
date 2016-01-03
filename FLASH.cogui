@@ -15,26 +15,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-<part id="1"/>
-<part id="2"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="RCC.c" partName="RCC.c" path="C:/Users/User/CoIDE/workspace/FLASH/app/RCC.c" title="RCC.c" tooltip="C:/Users/User/CoIDE/workspace/FLASH/app/RCC.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/FLASH/App/RCC.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
-</editor>
-<editor id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.h" partName="FLASH.h" path="C:/Users/User/CoIDE/workspace/FLASH/app/FLASH.h" title="FLASH.h" tooltip="C:/Users/User/CoIDE/workspace/FLASH/app/FLASH.h" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/FLASH/App/FLASH.h"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="1808"/>
-</editor>
-<editor activePart="true" focus="true" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" partName="main.c" path="C:/Users/User/CoIDE/workspace/FLASH/app/main.c" title="main.c" tooltip="C:/Users/User/CoIDE/workspace/FLASH/app/main.c" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/FLASH/App/main.c"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="539" selectionTopPixel="30"/>
-</editor>
 </editors>
 <views>
 <view id="org.coocox.builder.ui.views.ProjectView" partName="Project">
@@ -44,7 +28,7 @@
 <element path="/FLASH/App"/>
 </expanded>
 <selection>
-<element path="/FLASH/App/main.c"/>
+<element path="/FLASH/App/RCC.h"/>
 </selection>
 </viewState>
 </view>
@@ -59,8 +43,7 @@
 </view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>
-<category IMemento.internal.id="Warnings (1 item)"/>
+<expanded>&#x0A;<category IMemento.internal.id="Warnings (1 item)"/>
 </expanded>
 <columnWidths org.eclipse.ui.ide.locationField="120" org.eclipse.ui.ide.markerType="120" org.eclipse.ui.ide.pathField="160" org.eclipse.ui.ide.resourceField="120" org.eclipse.ui.ide.severityAndDescriptionField="400"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
@@ -80,7 +63,7 @@
 <viewState/>
 </view>
 </views>
-<perspectives activePart="org.eclipse.cdt.ui.editor.CEditor" activePerspective="org.coocox.builder.perspective.CoBuilder">
+<perspectives activePart="org.coocox.builder.ui.views.ProjectView" activePerspective="org.coocox.builder.perspective.CoBuilder">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.coocox.builder.ui.PerspectiveCoBuilder" id="org.coocox.builder.perspective.CoBuilder" label="CooCox CoBuilder"/>
 <alwaysOnActionSet id="org.coocox.welcome.ui.actionSet"/>
@@ -102,8 +85,8 @@
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showMemoryBrowserAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showVariablesAction"/>
 <hide_menu_item_id id="org.coocox.builder.ui.openProjectExplorerAction"/>
-<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.eclipse.debug.ui.commands.TerminateAndRelaunch"/>
+<hide_menu_item_id id="org.coocox.codebugger.trace.actions.ShowTraceControlAction"/>
 <hide_menu_item_id id="org.coocox.codebugger.configuration.showRegistersAction"/>
 <hide_toolbar_item_id id="org.eclipse.cdt.debug.internal.ui.actions.ToggleInstructionStepModeAction"/>
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
@@ -197,8 +180,8 @@
 <hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
 <hide_toolbar_item_id id="org.coocox.builder.ui.build"/>
 <hide_toolbar_item_id id="org.coocox.welcome.ui.action.welcome"/>
-<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <hide_toolbar_item_id id="org.coocox.component.ui.ShowRepositoryAction"/>
+<hide_toolbar_item_id id="org.coocox.codebugger.configuration.coideProgramDownloadAction"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
 <view id="org.eclipse.debug.ui.DebugView"/>
 <view id="org.coocox.codebugger.trace.ui.traceview"/>
@@ -206,34 +189,49 @@
 <view id="org.coocox.builder.ui.views.ProjectView"/>
 <fastViewBars/>
 <viewLayoutRec closeable="false" id="org.eclipse.debug.ui.DebugView"/>
-<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="org.eclipse.ui.internal.ViewStack@663717">&#x0A;<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<layout>
+<mainWindow>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@663717">
+<folder activePageID="org.coocox.builder.ui.views.ProjectView" appearance="2" expanded="2">
+<page content="org.coocox.builder.ui.views.ProjectView" label="Project"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@663717">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@663717">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1f733e9" ratio="0.5799782" ratioLeft="533" ratioRight="386" relationship="4" relative="org.eclipse.ui.internal.ViewStack@663717">&#x0A;<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1f733e9" ratio="0.74972796" ratioLeft="689" ratioRight="230" relationship="4" relative="org.eclipse.ui.internal.ViewStack@663717">
+<folder activePageID="org.eclipse.debug.ui.DebugView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
 <page content="org.eclipse.debug.ui.DebugView" label="Debug"/>
 <page content="org.eclipse.debug.ui.BreakpointView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@278f6d" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1f733e9">&#x0A;<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">&#x0A;<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@278f6d" ratio="0.5" ratioLeft="956" ratioRight="956" relationship="2" relative="org.eclipse.ui.internal.ViewStack@1f733e9">
+<folder activePageID="org.eclipse.debug.ui.VariableView" appearance="2" expanded="2">
+<page content="org.coocox.codebugger.trace.ui.traceview" label="Semihosting"/>
 <page content="org.eclipse.debug.ui.VariableView" label="Variables"/>
 <page content="org.eclipse.debug.ui.ExpressionView" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.MemoryView" label="LabelNotFound"/>
 <page content="org.eclipse.cdt.debug.ui.memory.memorybrowser.MemoryBrowser" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@13952ba" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@663717">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@13952ba" ratio="0.75" ratioLeft="1434" ratioRight="478" relationship="2" relative="org.eclipse.ui.internal.ViewStack@663717">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.cdt.dsf.debug.ui.disassembly.view" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ContentOutline" label="LabelNotFound"/>
 <page content="org.eclipse.debug.ui.RegisterView" label="LabelNotFound"/>
 <page content="org.coocox.coassistant.view.CoAssistantView_debug" label="LabelNotFound"/>
@@ -249,35 +247,161 @@
 <navigationHistory>
 <editors>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/main.c"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/RCC.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/FLASH.c"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/FLASH.h"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" path="/FLASH/Config/startup_stm32f429xx.s"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/RCC.c"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" path="/FLASH/App/DMA.c"/>
 </editors>
-<item historyLabel="main.c" index="0">
-<position info="not_deleted" x="457" y="0"/>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="552" y="0"/>
 </item>
-<item historyLabel="RCC.c" index="1">
-<position info="not_deleted" x="0" y="0"/>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="585" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="623" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
-<position info="not_deleted" x="457" y="0"/>
+<position info="not_deleted" x="642" y="0"/>
 </item>
 <item historyLabel="FLASH.h" index="2">
+<position info="not_deleted" x="2528" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="608" y="0"/>
+</item>
+<item historyLabel="startup_stm32f429xx.s" index="3">
 <position info="not_deleted" x="0" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
-<position info="not_deleted" x="457" y="0"/>
-</item>
-<item historyLabel="FLASH.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
+<position info="not_deleted" x="125" y="0"/>
 </item>
 <item historyLabel="main.c" index="0">
-<position info="not_deleted" x="455" y="0"/>
+<position info="not_deleted" x="834" y="0"/>
+</item>
+<item historyLabel="RCC.c" index="4">
+<position info="not_deleted" x="314" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="834" y="0"/>
+</item>
+<item historyLabel="DMA.c" index="5">
+<position info="not_deleted" x="1506" y="0"/>
 </item>
 <item historyLabel="FLASH.h" index="2">
-<position info="not_deleted" x="0" y="0"/>
+<position info="not_deleted" x="2528" y="0"/>
 </item>
-<item active="true" historyLabel="main.c" index="0">
-<position info="not_deleted" x="455" y="0"/>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1680" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="852" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1020" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="1218" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="884" y="0"/>
+</item>
+<item historyLabel="startup_stm32f429xx.s" index="3">
+<position info="not_deleted" x="3665" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="125" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="163" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="682" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="852" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="866" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1254" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="40" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="70" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1277" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="552" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="585" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="623" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1296" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1387" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1419" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1454" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="552" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="585" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="623" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1473" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1504" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="1534" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="552" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="585" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="623" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="956" y="0"/>
+</item>
+<item historyLabel="FLASH.c" index="1">
+<position info="not_deleted" x="623" y="0"/>
+</item>
+<item historyLabel="FLASH.h" index="2">
+<position info="not_deleted" x="2554" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="956" y="0"/>
+</item>
+<item historyLabel="main.c" index="0">
+<position info="not_deleted" x="694" y="0"/>
+</item>
+<item active="true" historyLabel="startup_stm32f429xx.s" index="3">
+<position info="not_deleted" x="3879" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -291,19 +415,29 @@
 <org.coocox.welcome.ui.WelcomePage/>
 </persistable>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="FLASH/App/main.c">
-<persistable path="/FLASH/App/main.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.asm.AsmEditor" name="startup_stm32f429xx.s" tooltip="FLASH/Config/startup_stm32f429xx.s">
+<persistable path="/FLASH/Config/startup_stm32f429xx.s"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.h" tooltip="FLASH/App/FLASH.h">
-<persistable path="/FLASH/App/FLASH.h"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="RCC.h" tooltip="FLASH/App/RCC.h">
+<persistable path="/FLASH/App/RCC.h"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="RCC.c" tooltip="FLASH/App/RCC.c">
 <persistable path="/FLASH/App/RCC.c"/>
 </file>
-<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
-<persistable>
-<org.coocox.welcome.ui.WelcomePage/>
-</persistable>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="main.c" tooltip="FLASH/App/main.c">
+<persistable path="/FLASH/App/main.c"/>
+</file>
+<file factoryID="org.eclipse.cdt.ui.ExternalEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.h" tooltip="C:\Users\User\CoIDE\workspace\FLASH\app\FLASH.h">
+<persistable path="C:\Users\User\CoIDE\workspace\FLASH\app\FLASH.h" project="FLASH"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="DMA.h" tooltip="FLASH/App/DMA.h">
+<persistable path="/FLASH/App/DMA.h"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="DMA.c" tooltip="FLASH/App/DMA.c">
+<persistable path="/FLASH/App/DMA.c"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.c" tooltip="FLASH/App/FLASH.c">
+<persistable path="/FLASH/App/FLASH.c"/>
 </file>
 <file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
 <persistable>
@@ -320,26 +454,13 @@
 <org.coocox.welcome.ui.WelcomePage/>
 </persistable>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="RCC.h" tooltip="NVIC/App/RCC.h">
-<persistable path="/NVIC/App/RCC.h"/>
+<file factoryID="org.coocox.builder.ui.persistent.PersistentElementFactory" id="org.coocox.welcome.ui.WelcomePage" name="" tooltip="">
+<persistable>
+<org.coocox.welcome.ui.WelcomePage/>
+</persistable>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="Registers.h" tooltip="NVIC/App/Registers.h">
-<persistable path="/NVIC/App/Registers.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="RCC.c" tooltip="NVIC/App/RCC.c">
-<persistable path="/NVIC/App/RCC.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="DMA.h" tooltip="NVIC/App/DMA.h">
-<persistable path="/NVIC/App/DMA.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="DMA.c" tooltip="NVIC/App/DMA.c">
-<persistable path="/NVIC/App/DMA.c"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.h" tooltip="NVIC/App/FLASH.h">
-<persistable path="/NVIC/App/FLASH.h"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.c" tooltip="NVIC/App/FLASH.c">
-<persistable path="/NVIC/App/FLASH.c"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.cdt.ui.editor.CEditor" name="FLASH.h" tooltip="FLASH/App/FLASH.h">
+<persistable path="/FLASH/App/FLASH.h"/>
 </file>
 </mruList>
 </workbench>

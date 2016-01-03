@@ -40,52 +40,37 @@ void flashLock(){
 }
 
 void sectorErase(uint32_t sectorNum){
-
-	int busyCount=0;
-  
-	if(!checkBusy()){
-		checkFlashReg();
-		FLASH->CR &= ~FLASH_CR_SER;
-		FLASH->CR &= ~FLASH_CR_SNB;
-		FLASH->CR &= ~FLASH_CR_STRT;
-		checkFlashReg();
-		FLASH->CR |= FLASH_CR_SER;
-		FLASH->CR |= sectorNum << FLASH_CR_SNB_bit;
-		FLASH->CR |= FLASH_CR_STRT;
-		checkFlashReg();
-		while(checkBusy()){
-			busyCount++;
-		}
-	}
+	while(checkBusy()){}
+	checkFlashReg();
+	FLASH->CR &= ~FLASH_CR_SER;
+	FLASH->CR &= ~FLASH_CR_SNB;
+	FLASH->CR &= ~FLASH_CR_STRT;
+	FLASH->CR |= FLASH_CR_SER;
+	FLASH->CR |= sectorNum << FLASH_CR_SNB_bit;
+	FLASH->CR |= FLASH_CR_STRT;
+	checkFlashReg();
+	while(checkBusy()){}
 	FLASH->CR &= ~FLASH_CR_SER;
 	FLASH->CR &= ~FLASH_CR_SNB;
 	checkFlashReg();
 }
 
 void bankErase(int bankNum){
-
-	int busyCount=0;
-
-	if(!checkBusy()){
-
-		checkFlashReg();
-		if(bankNum==1){
-			FLASH->CR &= ~FLASH_CR_MER;
-			FLASH->CR |= FLASH_CR_MER;
-		}
-		else{
-			FLASH->CR &= ~FLASH_CR_MER1;
-			FLASH->CR |= FLASH_CR_MER1;
-		}
-		checkFlashReg();
-		FLASH->CR &= ~FLASH_CR_STRT;
-		FLASH->CR |= FLASH_CR_STRT;
-		checkFlashReg();
-
-		while(checkBusy()){
-			busyCount++;
-		}
+	while(checkBusy()){}
+	checkFlashReg();
+	if(bankNum==1){
+		FLASH->CR &= ~FLASH_CR_MER;
+		FLASH->CR |= FLASH_CR_MER;
 	}
+	else{
+		FLASH->CR &= ~FLASH_CR_MER1;
+		FLASH->CR |= FLASH_CR_MER1;
+	}
+	checkFlashReg();
+	FLASH->CR &= ~FLASH_CR_STRT;
+	FLASH->CR |= FLASH_CR_STRT;
+	checkFlashReg();
+	while(checkBusy()){}
 	FLASH->CR &= ~FLASH_CR_MER;
 	FLASH->CR &= ~FLASH_CR_MER1;
 	checkFlashReg();
@@ -129,32 +114,27 @@ void flashProgramConfig(int PSIZEsel){
 	checkFlashReg();
 }
 
-void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address){
-	int busyCount=0,error=0;
+void flashProgram(int PSIZEsel,uint64_t value,uint32_t *Address){
+	int error=0;
 	WRITE_SIZE *write;
 
 	write=((uint32_t *)(Address));
 
-	if(!checkBusy()){
-		flashProgramConfig(PSIZEsel);
-		flashProgramEn();
-
-		error=checkFlashError();
-
-		checkFlashReg();
-		switch(PSIZEsel){
-		  case x8 :value &= 0xFF;break;
-		  case x16:value &= 0xFFFF;break;
-		  case x32:value &= 0xFFFFFFFF;break;
-		  case x64:value &= 0xFFFFFFFFFFFFFFFF;break;
-		}
-		*write=value;
-		error=checkFlashError();
-
-		while(checkBusy()){
-			busyCount++;
-		}
+	while(checkBusy()){}
+	checkFlashReg();
+	flashProgramConfig(PSIZEsel);
+	flashProgramEn();
+	error=checkFlashError();
+	checkFlashReg();
+	switch(PSIZEsel){
+	  case x8 :value &= 0xFF;break;
+	  case x16:value &= 0xFFFF;break;
+	  case x32:value &= 0xFFFFFFFF;break;
+	  case x64:value &= 0xFFFFFFFFFFFFFFFF;break;
 	}
+	*write=value;
+	error=checkFlashError();
+	while(checkBusy()){}
 	flashProgramDisable();
 }
 
@@ -169,7 +149,6 @@ void unlockFlashOptionByte(){
 
 void flashOptionByteLock(){
 	FLASH->OPTCR|= FLASH_OPTCR_OPTLOCK;
-
 }
 
 

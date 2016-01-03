@@ -62,8 +62,8 @@ struct FLASH_TypeDef_t
 #define x32     2
 #define x64     3
 
-#define WRITE_SIZE	uint32_t
-#define TARGET_ADD	((uint32_t *)0x08104000)
+#define WRITE_SIZE	uint8_t
+#define TARGET_ADD	((WRITE_SIZE *)0x08104000)
 
 //Sector in bank 1
 #define SECTOR0     0
@@ -110,7 +110,7 @@ void massErase();
 
 void flashProgramEn();
 void flashProgramConfig(int PSIZEsel);
-void flashProgram(int PSIZEsel,uint64_t value,uint32_t Address);
+void flashProgram(int PSIZEsel,uint64_t value,uint32_t *Address);
 void flashProgramDisable();
 
 void unlockFlashOptionByte();

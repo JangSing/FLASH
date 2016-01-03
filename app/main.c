@@ -7,7 +7,7 @@
 
 int main(void)
 {
-	int flashError=0,guard=0,i=0;
+	int flashError=0;int guard=0;int i=0;
 	int latency=checkLatency();
 	uint32_t HCLCK=getSystemClock();
 	WRITE_SIZE *readAdd=TARGET_ADD;
@@ -15,13 +15,12 @@ int main(void)
 	uint32_t SRC_Const_Buffer[]={12,23,15,10,12,22,22,12,32,12,14,53,90,99};
 	uint32_t test_Buffer[10];
 
-	checkDMAReg();
-	checkFlashReg();
-
 	DMA2UnresetEnableClock();
 
 	while(1){
+		checkFlashReg();
 		unlockFlashCR();
+		checkFlashReg();
 		unlockFlashOptionByte();
 		flashError=checkFlashError();
 		for(i=0;i<TRANSFER_LEN;i++)
@@ -48,7 +47,7 @@ int main(void)
 		readAdd=TARGET_ADD;
 		//Flash Program
 		if(guard){
-			flashProgram(x32,0x11111,TARGET_ADD);
+			flashProgram(x32,0x11101,TARGET_ADD);
 			flashError=checkFlashError();
 			guard=0;
 		}
@@ -60,9 +59,11 @@ int main(void)
 			configDMA2s7CR(MemToMem,x32,x32,VeryHighPrio,CHANNEL0);
 			DMA_memcpy8( ((uint32_t *)0x08104000), SRC_Const_Buffer, TRANSFER_LEN );
 			//DMA_memcpy8( test_Buffer, SRC_Const_Buffer, TRANSFER_LEN );
+
 			flashProgramConfig(x32);
 			flashProgramEn();
 			enableDMA();
+			while(checkBusy()){}
 			flashError=checkFlashError();
 
 			flashProgramDisable();
