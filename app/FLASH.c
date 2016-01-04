@@ -78,24 +78,17 @@ void bankErase(int bankNum){
 
 void massErase(){
 
-	int busyCount=0;
-
-	if(!checkBusy()){
-
-		checkFlashReg();
-		FLASH->CR &= ~FLASH_CR_MER;
-		FLASH->CR &= ~FLASH_CR_MER1;
-		FLASH->CR |= FLASH_CR_MER;
-		FLASH->CR |= FLASH_CR_MER1;
-		checkFlashReg();
-		FLASH->CR &= ~FLASH_CR_STRT;
-		FLASH->CR |= FLASH_CR_STRT;
-		checkFlashReg();
-
-		while(checkBusy()){
-			busyCount++;
-		}
-	}
+	while(checkBusy()){}
+	checkFlashReg();
+	FLASH->CR &= ~FLASH_CR_MER;
+	FLASH->CR &= ~FLASH_CR_MER1;
+	FLASH->CR |= FLASH_CR_MER;
+	FLASH->CR |= FLASH_CR_MER1;
+	checkFlashReg();
+	FLASH->CR &= ~FLASH_CR_STRT;
+	FLASH->CR |= FLASH_CR_STRT;
+	checkFlashReg();
+	while(checkBusy()){}
 	FLASH->CR &= ~FLASH_CR_MER;
 	FLASH->CR &= ~FLASH_CR_MER1;
 	checkFlashReg();
@@ -133,8 +126,8 @@ void flashProgram(int PSIZEsel,uint64_t value,uint32_t *Address){
 	  case x64:value &= 0xFFFFFFFFFFFFFFFF;break;
 	}
 	*write=value;
-	error=checkFlashError();
 	while(checkBusy()){}
+	error=checkFlashError();
 	flashProgramDisable();
 }
 
